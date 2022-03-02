@@ -1,5 +1,5 @@
 import React from "react";
-// import { useState } from "react";
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,29 +7,51 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
-  Switch,
+  Alert,
+  // Switch,
 } from "react-native";
 
 export default function App() {
   // const [toggle, setToogle] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   // const handleToggle = () => {
   //   setToogle((prev) => !prev);
   // };
 
   const handleSubmit = () => {
-    console.log("Submit");
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(email)) {
+    } else {
+      Alert.alert("INVALID EMAIL ADDRESS");
+    }
+    if (password.length > 6) {
+    } else {
+      Alert.alert("INVALID PASSWORD");
+    }
+    if (reg.test(email) && password.length > 6) {
+      Alert.alert("You logged in successfully!");
+    }
   };
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <Text style={styles.title}>Form</Text>
-        <TextInput style={styles.input} placeholder="Your email" />
+        <TextInput
+          style={styles.input}
+          placeholder="Your email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
         <TextInput
           style={styles.input}
           placeholder="Your password"
           secureTextEntry
+          value={password}
+          onChangeText={setPassword}
         />
         {/* <Switch value={toggle} onValueChange={handleToggle} /> */}
         <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
