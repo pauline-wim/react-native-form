@@ -15,6 +15,8 @@ export default function App() {
   // const [toggle, setToogle] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
+  const [validPassword, setValidPassword] = useState(false);
 
   // const handleToggle = () => {
   //   setToogle((prev) => !prev);
@@ -23,11 +25,15 @@ export default function App() {
   const handleSubmit = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (reg.test(email)) {
+      setValidEmail(true);
     } else {
+      setValidEmail(false);
       Alert.alert("INVALID EMAIL ADDRESS");
     }
     if (password.length > 6) {
+      setValidPassword(true);
     } else {
+      setValidPassword(false);
       Alert.alert("INVALID PASSWORD");
     }
     if (reg.test(email) && password.length > 6) {
@@ -40,14 +46,14 @@ export default function App() {
       <View style={styles.container}>
         <Text style={styles.title}>Form</Text>
         <TextInput
-          style={styles.input}
+          style={validEmail ? styles.validInput : styles.invalidInput}
           placeholder="Your email"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
         />
         <TextInput
-          style={styles.input}
+          style={validPassword ? styles.validInput : styles.invalidInput}
           placeholder="Your password"
           secureTextEntry
           value={password}
@@ -72,13 +78,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 40,
   },
-  input: {
+  validInput: {
     marginTop: 10,
     borderWidth: 1,
     width: 200,
     padding: 5,
     borderRadius: 5,
     borderColor: "lightgrey",
+  },
+  invalidInput: {
+    marginTop: 10,
+    borderWidth: 1,
+    width: 200,
+    padding: 5,
+    borderRadius: 5,
+    borderColor: "red",
   },
   btn: {
     marginTop: 10,
